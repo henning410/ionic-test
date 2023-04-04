@@ -13,6 +13,23 @@
     </ion-toolbar>
   </ion-header>
   <div>
-    <app-osm-map></app-osm-map>
+    <ion-button id="open-action-sheet">Default</ion-button>
+    <ion-button color="primary">Primary</ion-button>
+    <ion-button color="secondary">Secondary</ion-button>
+    <ion-button color="tertiary">Tertiary</ion-button>
+    <ion-button color="success">Success</ion-button>
+    <ion-button color="warning">Warning</ion-button>
+    <ion-button color="danger">Danger</ion-button>
+    <ion-button color="light">Light</ion-button>
+    <ion-button color="medium">Medium</ion-button>
+    <ion-button color="dark">Dark</ion-button>
   </div>
+  <div>
+    <ion-datetime></ion-datetime>
+  </div>
+  <ion-action-sheet
+    trigger="open-action-sheet"
+    header="Actions"
+    [buttons]="actionSheetButtons"
+  ></ion-action-sheet>
 </ion-content>

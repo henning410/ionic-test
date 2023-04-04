@@ -31,12 +31,12 @@ export class OsmMap2Page implements OnInit {
   }
 
   leafletMap() {
-    this.map = L.map('mapId').setView([48.74146661353846, 9.316857007380438], 10);
+    this.map = L.map('mapId').setView([48.74146661353846, 9.316857007380438], 15);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',).addTo(this.map);
     this.map.invalidateSize();
     window.dispatchEvent(new Event('resize'));
-    /*L.marker([48.74494079278616, 9.32190382917665], {icon: this.greenIcon}).addTo(this.map).bindPopup('Delhi');
-    L.marker([48.73848995276122, 9.31277376165469], {icon: this.greenIcon}).addTo(this.map).bindPopup('Leh');*/
+    L.marker([48.74494079278616, 9.32190382917665], {icon: this.greenIcon}).addTo(this.map).bindPopup('Delhi');
+    L.marker([48.73848995276122, 9.31277376165469], {icon: this.greenIcon}).addTo(this.map).bindPopup('Leh');
 
     /*antPath([[28.644800, 77.216721], [34.1526, 77.5771]],
       {color: '#FF0000', weight: 5, opacity: 0.6})
