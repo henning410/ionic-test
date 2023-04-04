@@ -35,7 +35,7 @@ export class OsmMap2Page implements OnInit {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',).addTo(this.map);
     this.map.invalidateSize();
     window.dispatchEvent(new Event('resize'));
-    L.marker([48.74494079278616, 9.32190382917665], {icon: this.greenIcon}).addTo(this.map).bindPopup('Delhi');
+    L.marker([48.74494079278616, 9.32190382917665], {icon: this.greenIcon}).addTo(this.map).bindPopup(`<h3>Username: Hans</h3><h4>Preis pro kwh: 2.76€</h4><br><ion-icon name="star" size="large"></ion-icon><ion-icon name="star" size="large"></ion-icon><ion-icon name="star" size="large"></ion-icon><ion-icon name="star-outline" size="large"></ion-icon><ion-icon name="star-outline" size="large"></ion-icon><ion-button id="open-action-sheet">Default</ion-button>`);
     L.marker([48.73848995276122, 9.31277376165469], {icon: this.greenIcon}).addTo(this.map).bindPopup('Leh');
 
     /*antPath([[28.644800, 77.216721], [34.1526, 77.5771]],
