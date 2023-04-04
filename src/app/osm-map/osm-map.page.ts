@@ -20,11 +20,9 @@ export class OsmMapPage {
   markers: Leaflet.Marker[] = [];
   options = {
     layers: [
-      Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-      })
+      Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
     ],
-    zoom: 16,
+    zoom: 50,
     center: { lat: 28.626137, lng: 79.821603 }
   }
 
@@ -60,6 +58,7 @@ export class OsmMapPage {
 
   onMapReady($event: Leaflet.Map) {
     this.map = $event;
+    this.map.setView([51.505, -0.09], 13);
     this.initMarkers();
   }
 
@@ -69,7 +68,6 @@ export class OsmMapPage {
 
   markerClicked($event: any, index: number) {
     console.log($event.latlng.lat, $event.latlng.lng);
-    alert('TEST');
   }
 
   markerDragEnd($event: any, index: number) {
