@@ -19,7 +19,7 @@ export class OsmMap2Page implements OnInit {
 
   greenIcon = L.icon({
     iconUrl: 'https://cdn-icons-png.flaticon.com/512/2017/2017809.png',
-    iconSize:     [50, 50], // size of the icon
+    iconSize:     [40, 40], // size of the icon
   });
 
   constructor() {
@@ -35,8 +35,9 @@ export class OsmMap2Page implements OnInit {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',).addTo(this.map);
     this.map.invalidateSize();
     window.dispatchEvent(new Event('resize'));
-    L.marker([48.74494079278616, 9.32190382917665], {icon: this.greenIcon}).addTo(this.map).bindPopup(`<h3>Username: Hans</h3><h4>Preis pro kwh: 2.76€</h4><br><ion-icon name="star" size="large"></ion-icon><ion-icon name="star" size="large"></ion-icon><ion-icon name="star" size="large"></ion-icon><ion-icon name="star-outline" size="large"></ion-icon><ion-icon name="star-outline" size="large"></ion-icon><ion-button id="open-action-sheet">Default</ion-button>`);
+    L.marker([48.74494079278616, 9.32190382917665], {icon: this.greenIcon}).addTo(this.map).bindPopup(`<h3>Username: Hans</h3><h4>Preis pro kwh: 2.76€</h4><br><ion-icon name="star" size="large"></ion-icon><ion-icon name="star" size="large"></ion-icon><ion-icon name="star" size="large"></ion-icon><ion-icon name="star-outline" size="large"></ion-icon><ion-icon name="star-outline" size="large"></ion-icon><hr style="height:2px;border-width:0;color:gray;background-color:gray"><div style="display: flex; justify-content: center"><ion-button id="open-action-sheet">Default</ion-button></div>`);
     L.marker([48.73848995276122, 9.31277376165469], {icon: this.greenIcon}).addTo(this.map).bindPopup('Leh');
+    L.marker([48.73532949058122, 9.320567098646743], {icon: this.greenIcon}).addTo(this.map).bindPopup('Leh');
 
     //center marker when popup opens
     this.map.on('popupopen', (e) => {
