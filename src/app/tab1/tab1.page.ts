@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import {Tab2Page} from "../tab2/tab2.page";
-import {OsmMapPage} from "../osm-map/osm-map.page";
 import {OsmMap2Page} from "../osm-map2/osm-map2.page";
 
 @Component({
