@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
@@ -15,7 +15,8 @@ import {GeoSearchControl, OpenStreetMapProvider} from "leaflet-geosearch";
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, MarkerPopupComponent, RouterModule]
 })
-export class OsmMap2Page implements OnInit {
+export class OsmMap2Page implements OnInit, OnChanges {
+  @Input() selectedLocation: any;
 
   map: L.Map | undefined;
 
@@ -24,37 +25,19 @@ export class OsmMap2Page implements OnInit {
     iconSize: [40, 40], // size of the icon
   });
 
-constructor(public router: Router) {
-  geojson: any = {
-    "type": "Feature",
-    "properties": {
-      "place_id": 308130537,
-      "osm_type": "relation",
-      "osm_id": 2792882,
-      "display_name": "Esslingen am Neckar, Landkreis Esslingen, Baden-Württemberg, Deutschland",
-      "place_rank": 16,
-      "category": "boundary",
-      "type": "administrative",
-      "importance": 0.6154241031206532,
-      "icon": "https://nominatim.openstreetmap.org/ui/mapicons/poi_boundary_administrative.p.20.png"
-    },
-    "bbox": [
-      9.2562418,
-      48.7065634,
-      9.4165802,
-      48.7757682
-    ],
-    "geometry": {
-      "type": "Point",
-      "coordinates": [
-        9.3071685,
-        48.7427584
-      ]
-    }
+  constructor(public router: Router) {
   }
 
   ngOnInit() {
     this.leafletMap();
+  }
+
+  ngOnChanges(changes: any) {
+    if (this.selectedLocation !== null) {
+      console.log('CHANGE: ',  this.selectedLocation.geometry.coordinates[0]);
+      /*L.marker([this.selectedLocation.geometry.coordinates[1], this.selectedLocation.geometry.coordinates[0]], {icon: this.greenIcon}).addTo(this.map!);*/
+      this.map!.setView([this.selectedLocation.geometry.coordinates[1], this.selectedLocation.geometry.coordinates[0]], 15);
+    }
   }
 
   leafletMap() {
@@ -82,24 +65,13 @@ constructor(public router: Router) {
     L.marker([48.73848995276122, 9.31277376165469], {icon: this.greenIcon}).addTo(this.map).bindPopup(content);
     L.marker([48.73532949058122, 9.320567098646743], {icon: this.greenIcon}).addTo(this.map).bindPopup(`<app-marker-popup></app-marker-popup>`);
 
+
     //center marker when popup opens
     this.map.on('popupopen', (e) => {
       var px = this.map!.project(e.target._popup._latlng); // find the pixel location on the map where the popup anchor is
       px.y -= e.target._popup._container.clientHeight / 2; // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
       this.map!.panTo(this.map!.unproject(px), {animate: true}); // pan to new center
     });
-
-    const geoJsonLayer = L.geoJSON(this.geojson, {
-
-      pointToLayer(feature, latlng) {
-        const greenIcon = L.icon({
-          iconUrl: 'https://cdn-icons-png.flaticon.com/512/2017/2017809.png',
-          iconSize: [40, 40], // size of the icon
-        });
-        return L.marker(latlng, {icon: greenIcon});
-      }
-    }).addTo(this.map);
-
 
     /*antPath([[28.644800, 77.216721], [34.1526, 77.5771]],
       {color: '#FF0000', weight: 5, opacity: 0.6})
