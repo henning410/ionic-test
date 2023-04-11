@@ -6,7 +6,7 @@ import * as L from 'leaflet';
 import {antPath} from 'leaflet-ant-path';
 import {MarkerPopupComponent} from "../marker-popup/marker-popup.component";
 import {Router, RouterModule} from "@angular/router";
-
+import {GeoSearchControl, OpenStreetMapProvider} from "leaflet-geosearch";
 
 @Component({
   selector: 'app-osm-map2',
@@ -24,7 +24,33 @@ export class OsmMap2Page implements OnInit {
     iconSize: [40, 40], // size of the icon
   });
 
-  constructor(public router: Router) {
+constructor(public router: Router) {
+  geojson: any = {
+    "type": "Feature",
+    "properties": {
+      "place_id": 308130537,
+      "osm_type": "relation",
+      "osm_id": 2792882,
+      "display_name": "Esslingen am Neckar, Landkreis Esslingen, Baden-Württemberg, Deutschland",
+      "place_rank": 16,
+      "category": "boundary",
+      "type": "administrative",
+      "importance": 0.6154241031206532,
+      "icon": "https://nominatim.openstreetmap.org/ui/mapicons/poi_boundary_administrative.p.20.png"
+    },
+    "bbox": [
+      9.2562418,
+      48.7065634,
+      9.4165802,
+      48.7757682
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        9.3071685,
+        48.7427584
+      ]
+    }
   }
 
   ngOnInit() {
@@ -62,6 +88,18 @@ export class OsmMap2Page implements OnInit {
       px.y -= e.target._popup._container.clientHeight / 2; // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
       this.map!.panTo(this.map!.unproject(px), {animate: true}); // pan to new center
     });
+
+    const geoJsonLayer = L.geoJSON(this.geojson, {
+
+      pointToLayer(feature, latlng) {
+        const greenIcon = L.icon({
+          iconUrl: 'https://cdn-icons-png.flaticon.com/512/2017/2017809.png',
+          iconSize: [40, 40], // size of the icon
+        });
+        return L.marker(latlng, {icon: greenIcon});
+      }
+    }).addTo(this.map);
+
 
     /*antPath([[28.644800, 77.216721], [34.1526, 77.5771]],
       {color: '#FF0000', weight: 5, opacity: 0.6})
