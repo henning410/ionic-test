@@ -19,6 +19,8 @@ export class OsmMap2Page implements OnInit, OnChanges {
   @Input() selectedLocation: any;
 
   map: L.Map | undefined;
+  lat: number = 0;
+  long: number = 0;
 
   greenIcon = L.icon({
     iconUrl: 'https://cdn-icons-png.flaticon.com/512/2017/2017809.png',
@@ -29,12 +31,12 @@ export class OsmMap2Page implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.leafletMap();
+    this.getLocation();
   }
 
   ngOnChanges(changes: any) {
     if (this.selectedLocation !== null) {
-      console.log('CHANGE: ',  this.selectedLocation.geometry.coordinates[0]);
+      console.log('CHANGE: ', this.selectedLocation.geometry.coordinates[0]);
       /*L.marker([this.selectedLocation.geometry.coordinates[1], this.selectedLocation.geometry.coordinates[0]], {icon: this.greenIcon}).addTo(this.map!);*/
       this.map!.setView([this.selectedLocation.geometry.coordinates[1], this.selectedLocation.geometry.coordinates[0]], 15);
     }
@@ -57,7 +59,9 @@ export class OsmMap2Page implements OnInit, OnChanges {
     <app-marker-popup></app-marker-popup>
     `
 
-    this.map = L.map('mapId').setView([48.74146661353846, 9.316857007380438], 15);
+    console.log("Latitude: " + this.long +
+      "Longitude: " + this.lat);
+    this.map = L.map('mapId').setView([this.lat, this.long], 15);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',).addTo(this.map);
     this.map.invalidateSize();
     window.dispatchEvent(new Event('resize'));
@@ -76,6 +80,24 @@ export class OsmMap2Page implements OnInit, OnChanges {
     /*antPath([[28.644800, 77.216721], [34.1526, 77.5771]],
       {color: '#FF0000', weight: 5, opacity: 0.6})
       .addTo(this.map);*/
+  }
+
+  getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position: any) => {
+          if (position) {
+            console.log("Latitude: " + position.coords.latitude +
+              "Longitude: " + position.coords.longitude);
+            this.lat = position.coords.latitude;
+            this.long = position.coords.longitude;
+            this.leafletMap();
+          }
+        },
+        (error: any) => console.log(error));
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+
   }
 
   test() {
