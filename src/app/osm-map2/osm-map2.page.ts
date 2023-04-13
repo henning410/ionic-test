@@ -4,7 +4,6 @@ import {FormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 import * as L from 'leaflet';
 import {antPath} from 'leaflet-ant-path';
-import {MarkerPopupComponent} from "../marker-popup/marker-popup.component";
 import {Router, RouterModule} from "@angular/router";
 import {GeoSearchControl, OpenStreetMapProvider} from "leaflet-geosearch";
 
@@ -13,7 +12,7 @@ import {GeoSearchControl, OpenStreetMapProvider} from "leaflet-geosearch";
   templateUrl: './osm-map2.page.html',
   styleUrls: ['./osm-map2.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, MarkerPopupComponent, RouterModule]
+  imports: [IonicModule, CommonModule, FormsModule, RouterModule]
 })
 export class OsmMap2Page implements OnInit, OnChanges {
   @Input() selectedLocation: any;
@@ -44,14 +43,22 @@ export class OsmMap2Page implements OnInit, OnChanges {
 
   leafletMap() {
     let content = `
-    <h3>Username: Hans</h3>
-    <h4>Preis pro kwh: 2.76€</h4>
+    <ion-chip style="background-color: lightblue; color: black">
+        <ion-avatar>
+            <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
+        <ion-label>Max Müller</ion-label>
+    </ion-chip>
+    <p><span style="font-weight: bold">Preis pro kwh: </span> 2.76€</p>
+    <p><span style="font-weight: bold">Besonderheiten: </span> Bei dieser Ladesäule ist ein überdachter Stellplatz inklusive! Aud den Stellplatz passen Autos mit maximaler Länge von 4,5m</p>
     <br>
-    <ion-icon name="star" size="large"></ion-icon>
-    <ion-icon name="star" size="large"></ion-icon>
-    <ion-icon name="star" size="large"></ion-icon>
-    <ion-icon name="star-outline" size="large"></ion-icon>
-    <ion-icon name="star-outline" size="large"></ion-icon>
+    <div style="display: flex;">
+      <ion-icon name="star" size="large"></ion-icon>
+      <ion-icon name="star" size="large"></ion-icon>
+      <ion-icon name="star" size="large"></ion-icon>
+      <ion-icon name="star-outline" size="large"></ion-icon>
+      <ion-icon name="star-outline" size="large"></ion-icon>
+    </div>
     <hr style="height:2px;border-width:0;color:gray;background-color:gray">
     <div style="display: flex; justify-content: center">
         <ion-button id="open-action-sheet">Reservieren</ion-button>
@@ -65,7 +72,7 @@ export class OsmMap2Page implements OnInit, OnChanges {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',).addTo(this.map);
     this.map.invalidateSize();
     window.dispatchEvent(new Event('resize'));
-    L.marker([48.74494079278616, 9.32190382917665], {icon: this.greenIcon}).addTo(this.map).bindPopup(content).on('click', (event) => this.test());
+    L.marker([48.74494079278616, 9.32190382917665], {icon: this.greenIcon}).addTo(this.map).bindPopup(content, {className: 'test'}).on('click', (event) => this.test());
     L.marker([48.73848995276122, 9.31277376165469], {icon: this.greenIcon}).addTo(this.map).bindPopup(content);
     L.marker([48.73532949058122, 9.320567098646743], {icon: this.greenIcon}).addTo(this.map).bindPopup(`<app-marker-popup></app-marker-popup>`);
 
@@ -83,21 +90,9 @@ export class OsmMap2Page implements OnInit, OnChanges {
   }
 
   getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position: any) => {
-          if (position) {
-            console.log("Latitude: " + position.coords.latitude +
-              "Longitude: " + position.coords.longitude);
-            this.lat = position.coords.latitude;
-            this.long = position.coords.longitude;
-            this.leafletMap();
-          }
-        },
-        (error: any) => console.log(error));
-    } else {
-      alert("Geolocation is not supported by this browser.");
-    }
-
+    this.lat = 48.74494079278616;
+    this.long = 9.32190382917665;
+    this.leafletMap();
   }
 
   test() {
