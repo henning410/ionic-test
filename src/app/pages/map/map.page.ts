@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {IonicModule} from '@ionic/angular';
-import {ExploreContainerComponent} from '../../explore-container/explore-container.component';
 import {AddWallboxPage} from "../addWallbox/addWallbox.page";
 import {OsmMap2Page} from "../../osm-map2/osm-map2.page";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
@@ -12,7 +11,7 @@ import {FormsModule} from "@angular/forms";
   templateUrl: 'map.page.html',
   styleUrls: ['map.page.scss'],
   standalone: true,
-  imports: [IonicModule, ExploreContainerComponent, AddWallboxPage, OsmMap2Page, HttpClientModule, CommonModule, FormsModule],
+  imports: [IonicModule, AddWallboxPage, OsmMap2Page, HttpClientModule, CommonModule, FormsModule],
 })
 export class MapPage {
   result = ""

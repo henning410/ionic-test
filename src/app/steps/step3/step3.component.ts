@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import {Step2Component} from "../step2/step2.component";
 import {IonicModule} from "@ionic/angular";
 import {CommonModule} from "@angular/common";
 
 @Component({
-  selector: 'app-step1',
+  selector: 'app-step3',
+  templateUrl: './step3.component.html',
+  styleUrls: ['./step3.component.scss'],
   standalone: true,
-  templateUrl: './step1.component.html',
-  styleUrls: ['./step1.component.scss'],
   imports: [IonicModule, CommonModule],
 })
-export class Step1Component  implements OnInit {
-  component = Step2Component;
+export class Step3Component  implements OnInit {
 
   constructor() { }
 

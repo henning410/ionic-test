@@ -1,2 +1,26 @@
-<ion-nav [root]="component"></ion-nav>
+<ion-header *ngIf="currentStep === 0">
+  <ion-toolbar>
+    <ion-title>Wallbox erstellen</ion-title>
+  </ion-toolbar>
+</ion-header>
 
+<ion-header *ngIf="currentStep !== 0">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="back()" style="color: #3880ff">
+        <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+        Zurück
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Wallbox erstellen</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-progress-bar [value]="currentStep"></ion-progress-bar>
+  <div style="margin-top: 10%">
+    <app-step1 *ngIf="currentStep===0"></app-step1>
+    <app-step2 *ngIf="currentStep===0.5"></app-step2>
+    <app-step3 *ngIf="currentStep===1"></app-step3>
+  </div>
+</ion-content>
