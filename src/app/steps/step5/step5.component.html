@@ -1,0 +1,21 @@
+<div style="display: flex; justify-content: center; text-align: center">
+  <div>
+    <ion-icon name="help-outline" size="large"></ion-icon>
+    <h1>
+      Was müssen deine Gäste wissen? <br>Hinterlasse einen Kommentar für deine Gäste.
+    </h1>
+    <ion-list>
+      <ion-item>
+        <ion-textarea
+          placeholder="Beispiel: Wallbox steht hinter der Garage"
+          [autoGrow]="true"
+          value=""
+        >
+        </ion-textarea>
+      </ion-item>
+    </ion-list>
+    <div style="margin-top: 15%">
+      <ion-button (click)="save()" id="open-toast" expand="block">Speichern</ion-button>
+    </div>
+  </div>
+</div>

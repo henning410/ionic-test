@@ -1,23 +1,15 @@
 <div style="display: flex; justify-content: center; text-align: center">
   <div>
-    <ion-icon name="location-outline" size="large"></ion-icon>
+    <h1>Was ist der DC-Ausgang deiner Wallbox? in kW</h1>
+    <ion-range labelPlacement="end" [pin]="true" [pinFormatter]="pinFormatter" (ionChange)="onIonChange($event)" [value]="lastEmittedValue">
+      <div slot="label">{{ lastEmittedValue }} kW</div>
+    </ion-range>
     <h1>
-      Was müssen deine Gäste wissen? Z.B. „Wallbox steht hinter der Garage“
-      <br />oder „Mein Hund beißt nicht“ etc. Hinterlasse einen Kommentar für
-      deine Gäste.
+      Was ist dein individueller Preis für das Laden an deiner Wallbox? in
+      cent/kWh
     </h1>
-    <ion-list>
-      <ion-item>
-        <ion-textarea
-          placeholder="Type something here"
-          [autoGrow]="true"
-          value=""
-        >
-        </ion-textarea>
-      </ion-item>
-    </ion-list>
     <div style="margin-top: 15%">
-      <ion-button>Speichern</ion-button>
+      <ion-button (click)="next()">Weiter</ion-button>
     </div>
   </div>
 </div>

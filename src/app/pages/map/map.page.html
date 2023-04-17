@@ -5,9 +5,12 @@
     </ion-title>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-searchbar [debounce]="1000" animated="true" placeholder="Nach Standort suchen" color="primary" [(ngModel)]="result" (ionInput)="handleChange($event)"></ion-searchbar>
+    <div style="display: flex; align-items: center">
+      <ion-searchbar [debounce]="1000" animated="true" placeholder="Nach Standort suchen" color="primary" [(ngModel)]="typedSearch" (ionInput)="handleChange()"></ion-searchbar>
+      <ion-icon name="location-outline" size="large" (click)="setCurrentPosition()"></ion-icon>
+    </div>
     <ion-list>
-      <ion-item *ngFor="let item of config" (click)="itemSelected(item)">
+      <ion-item *ngFor="let item of searchResults" (click)="itemSelected(item)">
         <ion-label>{{ item.properties.display_name }}</ion-label>
       </ion-item>
     </ion-list>
