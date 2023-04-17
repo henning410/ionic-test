@@ -5,6 +5,8 @@ import {OsmMap2Page} from "../../osm-map2/osm-map2.page";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import {Geolocation} from '@capacitor/geolocation';
+import {UserDataService} from "../../services/user-data.service";
 
 @Component({
   selector: 'app-map',
@@ -14,32 +16,34 @@ import {FormsModule} from "@angular/forms";
   imports: [IonicModule, AddWallboxPage, OsmMap2Page, HttpClientModule, CommonModule, FormsModule],
 })
 export class MapPage {
-  result = ""
+  typedSearch = ""
   selectedLocation = null;
-  config: any = null;
+  searchResults: any = null;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private userDataService: UserDataService) {
   }
 
-  handleChange(event: any) {
-    console.log('CHANGE INPUT');
+  handleChange() {
+    console.log('INPUT CHANGED');
     this.showConfig();
-    this.result = event.target.value.toLowerCase();
   }
 
   showConfig() {
-    this.getRequest()
-      .subscribe((data: any) => this.config = data.features);
+    this.getRequest().subscribe((data: any) => this.searchResults = data.features);
   }
 
   getRequest() {
-    return this.http.get<JSON>('https://nominatim.openstreetmap.org/search?city=' + this.result +'&format=geojson');
+    return this.http.get<JSON>('https://nominatim.openstreetmap.org/search?city=' + this.typedSearch + '&format=geojson');
   }
 
-  itemSelected(item: any) {
-    this.config = [];
-    this.result = item.properties.display_name;
+  async itemSelected(item: any) {
+    this.searchResults = [];
+    this.typedSearch = item.properties.display_name;
     this.selectedLocation = item;
+  }
+
+  async setCurrentPosition() {
+    await this.userDataService.setLocation();
   }
 }
 

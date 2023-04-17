@@ -6,6 +6,8 @@ import * as L from 'leaflet';
 import {antPath} from 'leaflet-ant-path';
 import {Router, RouterModule} from "@angular/router";
 import {GeoSearchControl, OpenStreetMapProvider} from "leaflet-geosearch";
+import {GeoLocation} from "../models/location.model";
+import {UserDataService} from "../services/user-data.service";
 
 @Component({
   selector: 'app-osm-map2',
@@ -18,21 +20,36 @@ export class OsmMap2Page implements OnInit, OnChanges {
   @Input() selectedLocation: any;
 
   map: L.Map | undefined;
-  lat: number = 0;
-  long: number = 0;
+  currentUserLocation: GeoLocation = {latitude: 48.80308352215288, longitude: 9.198073272217787}
 
-  greenIcon = L.icon({
+  evcsIcon = L.icon({
     iconUrl: 'https://cdn-icons-png.flaticon.com/512/2017/2017809.png',
     iconSize: [40, 40], // size of the icon
   });
 
-  constructor(public router: Router) {
+  homeIcon = L.icon({
+    iconUrl: 'https://cdn-icons-png.flaticon.com/512/1243/1243945.png?w=740&t=st=1681553821~exp=1681554421~hmac=ecdbb2589b146e8cfe2abdd1b348b363f67029668d08f7aeb7cb8d996d5738b4',
+    iconSize: [40, 40], // size of the icon
+  });
+
+  constructor(public router: Router, private userDataService: UserDataService) {
   }
 
   ngOnInit() {
-    this.getLocation();
+    //Subscribe to current user location
+    this.userDataService.getCurrentLocation().subscribe((value) => {
+      this.currentUserLocation = value;
+      console.log('CHANGED: ', value);
+      //When map is loaded, set view to current lat/long and set zoom value
+      if (this.map) {
+        this.map.setView([this.currentUserLocation.latitude, this.currentUserLocation.longitude], 17);
+        L.marker([this.currentUserLocation.latitude, this.currentUserLocation.longitude], {icon: this.homeIcon}).addTo(this.map);
+      }
+    })
+    this.loadMap();
   }
 
+  // When Location in search bar is selected
   ngOnChanges(changes: any) {
     if (this.selectedLocation !== null) {
       console.log('CHANGE: ', this.selectedLocation.geometry.coordinates[0]);
@@ -41,7 +58,7 @@ export class OsmMap2Page implements OnInit, OnChanges {
     }
   }
 
-  leafletMap() {
+  loadMap() {
     let content = `
     <ion-chip style="background-color: lightblue; color: black">
         <ion-avatar>
@@ -66,15 +83,13 @@ export class OsmMap2Page implements OnInit, OnChanges {
     <app-marker-popup></app-marker-popup>
     `
 
-    console.log("Latitude: " + this.long +
-      "Longitude: " + this.lat);
-    this.map = L.map('mapId').setView([this.lat, this.long], 15);
+    this.map = L.map('mapId').setView([this.currentUserLocation.latitude, this.currentUserLocation.longitude], 10);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',).addTo(this.map);
     this.map.invalidateSize();
-    window.dispatchEvent(new Event('resize'));
-    L.marker([48.74494079278616, 9.32190382917665], {icon: this.greenIcon}).addTo(this.map).bindPopup(content, {className: 'test'}).on('click', (event) => this.test());
-    L.marker([48.73848995276122, 9.31277376165469], {icon: this.greenIcon}).addTo(this.map).bindPopup(content);
-    L.marker([48.73532949058122, 9.320567098646743], {icon: this.greenIcon}).addTo(this.map).bindPopup(`<app-marker-popup></app-marker-popup>`);
+    window.dispatchEvent(new Event('resize'));  //prevent loading bug in ionic
+    L.marker([48.74494079278616, 9.32190382917665], {icon: this.evcsIcon}).addTo(this.map).bindPopup(content, {className: 'test'}).on('click', (event) => this.test());
+    L.marker([48.73848995276122, 9.31277376165469], {icon: this.evcsIcon}).addTo(this.map).bindPopup(content);
+    L.marker([48.73532949058122, 9.320567098646743], {icon: this.evcsIcon}).addTo(this.map).bindPopup(`<app-marker-popup></app-marker-popup>`);
 
 
     //center marker when popup opens
@@ -87,12 +102,6 @@ export class OsmMap2Page implements OnInit, OnChanges {
     /*antPath([[28.644800, 77.216721], [34.1526, 77.5771]],
       {color: '#FF0000', weight: 5, opacity: 0.6})
       .addTo(this.map);*/
-  }
-
-  getLocation() {
-    this.lat = 48.74494079278616;
-    this.long = 9.32190382917665;
-    this.leafletMap();
   }
 
   test() {

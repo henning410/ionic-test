@@ -1,19 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicModule, RangeCustomEvent} from "@ionic/angular";
+import {IonicModule} from "@ionic/angular";
 import {CommonModule} from "@angular/common";
 import {StepperService} from "../../services/stepper.service";
-import { RangeValue } from '@ionic/core';
 
 @Component({
-  selector: 'app-step3',
-  templateUrl: './step3.component.html',
-  styleUrls: ['./step3.component.scss'],
+  selector: 'app-step4',
+  templateUrl: './step4.component.html',
+  styleUrls: ['./step4.component.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule],
 })
-export class Step3Component implements OnInit {
+export class Step4Component implements OnInit {
   currentStep = 0;
-  lastEmittedValue: RangeValue  = 22;
 
   constructor(private stepperService: StepperService) {
     this.stepperService.getCurrentStep().subscribe((value) => {
@@ -26,14 +24,6 @@ export class Step3Component implements OnInit {
   }
 
   ngOnInit() {
-  }
-
-  pinFormatter(value: number) {
-    return `${value} kW`;
-  }
-
-  onIonChange(ev: Event) {
-    this.lastEmittedValue = (ev as RangeCustomEvent).detail.value;
   }
 
 }

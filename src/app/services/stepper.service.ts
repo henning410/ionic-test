@@ -16,10 +16,10 @@ export class StepperService {
   }
 
   increaseStep() {
-    this.currentStep.next(this.currentStep.value + 0.5);
-  } 
+    this.currentStep.next(this.currentStep.value + 0.25);
+  }
 
   decreaseStep() {
-    this.currentStep.next(this.currentStep.value - 0.5);
-  } 
+    this.currentStep.next(this.currentStep.value - 0.25);
+  }
 }

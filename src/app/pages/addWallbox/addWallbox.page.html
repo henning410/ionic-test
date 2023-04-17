@@ -20,7 +20,9 @@
   <ion-progress-bar [value]="currentStep"></ion-progress-bar>
   <div style="margin-top: 10%">
     <app-step1 *ngIf="currentStep===0"></app-step1>
-    <app-step2 *ngIf="currentStep===0.5"></app-step2>
-    <app-step3 *ngIf="currentStep===1"></app-step3>
+    <app-step2 *ngIf="currentStep===0.25"></app-step2>
+    <app-step3 *ngIf="currentStep===0.5"></app-step3>
+    <app-step4 *ngIf="currentStep===0.75"></app-step4>
+    <app-step5 *ngIf="currentStep===1"></app-step5>
   </div>
 </ion-content>
