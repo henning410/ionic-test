@@ -1,2 +1,16 @@
-<div id="mapId" style="width: 100%; height: 100%">
-</div>
+<div id="mapId" style="width: 100%; height: 100%"></div>
+
+<!--<aside>
+  <ion-accordion-group>
+    <ion-accordion value="first">
+      <ion-item slot="header" color="light">
+        <ion-label>Navigation - Details</ion-label>
+      </ion-item>
+      <ng-container *ngFor="let coord of byString(json, 'features[0].properties.segments[0].steps')">
+        <div class="ion-padding" slot="content" style="color: white">
+          {{coord.instruction}}
+        </div>
+      </ng-container>
+    </ion-accordion>
+  </ion-accordion-group>
+</aside>-->

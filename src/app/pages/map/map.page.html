@@ -6,6 +6,7 @@
   </ion-toolbar>
   <ion-toolbar>
     <div style="display: flex; align-items: center">
+      <ion-icon name="options-outline" size="large"></ion-icon>
       <ion-searchbar [debounce]="1000" animated="true" placeholder="Nach Standort suchen" color="primary" [(ngModel)]="typedSearch" (ionInput)="handleChange()"></ion-searchbar>
       <ion-icon name="location-outline" size="large" (click)="setCurrentPosition()"></ion-icon>
     </div>

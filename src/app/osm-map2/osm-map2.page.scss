@@ -1,3 +1,19 @@
 ::ng-deep .leaflet-popup-content-wrapper, ::ng-deep .leaflet-popup-tip {
   /*background: lightgreen !important;*/
 }
+
+#mapId {
+  position: relative;
+  z-index: 1;
+}
+aside {
+  position: absolute;
+  z-index: 10;
+  left: auto;
+  right: auto;
+  bottom: 6%;
+  width: 100%;
+/*  background-color: red;*/
+  padding: 0 1.5rem;
+  color: black;
+}
