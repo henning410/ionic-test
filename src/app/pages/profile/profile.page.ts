@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-profile',
@@ -11,10 +12,20 @@ import { IonicModule } from '@ionic/angular';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class ProfilePage implements OnInit {
+  user: any = null;
 
-  constructor() { }
+  constructor(private auth: AuthService) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
+    console.log('ENTER VIEW');
+    this.user = this.auth.getUser();
+  }
+
+  logout() {
+    this.auth.logout();
   }
 
 }
