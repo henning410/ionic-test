@@ -5,9 +5,11 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-card *ngIf="user">
+    <ion-card-content>
+      Username: {{ user.username }}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="block" (click)="logout()">Logout</ion-button>
 </ion-content>
