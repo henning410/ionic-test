@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AlertController, IonicModule, ToastController} from '@ionic/angular';
 import {AuthService} from "../../services/auth.service";
@@ -21,46 +21,53 @@ export class RegisterPage implements OnInit {
     verifyPassword: 'neu'
   }
 
-  constructor(private auth: AuthService, private router: Router, private alertCtrl: AlertController, private toastCtrl: ToastController) { }
+  constructor(private auth: AuthService, private router: Router, private alertCtrl: AlertController, private toastCtrl: ToastController) {
+  }
 
   ngOnInit() {
   }
 
   register() {
-      this.auth.register(this.credentials).subscribe( async res => {
-        console.log('RES: ', res);
-        if (res) {
-          await this.router.navigateByUrl('');
-          const toast = await this.toastCtrl.create({
-            message: 'Account erfolgreich erstellt',
-            duration: 5000,
-            position: 'bottom',
-            icon: checkmarkOutline,
-            color: 'success'
-          });
-
-          await toast.present();
-        } else {
-          const alert = await this.alertCtrl.create({
-            header: 'Register Failed',
-            message: 'Something went wrong!',
-            buttons: ['OK']
-          });
-          await alert.present();
-        }
-      }, async err => {
-        console.log(err.error.message)
-        let errString = ``;
-        for (let message of err.error.message) {
-          errString = errString + message + `<br/>`;
-        }
-        console.log('NAchricht ' , errString);
+    this.auth.register(this.credentials).subscribe(async res => {
+      console.log('RES: ', res);
+      if (res.user) {
+        await this.router.navigateByUrl('');
+        const toast = await this.toastCtrl.create({
+          message: 'Account erfolgreich erstellt',
+          duration: 5000,
+          position: 'bottom',
+          icon: checkmarkOutline,
+          color: 'success'
+        });
+        await toast.present();
+      } else if (res.message) {
         const alert = await this.alertCtrl.create({
           header: 'Register Failed',
-          message: `Are these details correct?<br> Price ($/L): <br> KMs Done: <br> Total Spent: <br\> Fuel Type: <br\> Date: `,
+          message: res.message,
           buttons: ['OK']
         });
         await alert.present();
-      })
+      } else {
+        const alert = await this.alertCtrl.create({
+          header: 'Register Failed',
+          message: 'Something went wrong!',
+          buttons: ['OK']
+        });
+        await alert.present();
+      }
+    }, async err => {
+      console.log(err.error.message)
+      let errString = ``;
+      for (let message of err.error.message) {
+        errString = errString + message + `<br/>`;
+      }
+      console.log('NAchricht ', errString);
+      const alert = await this.alertCtrl.create({
+        header: 'Register Failed',
+        message: errString,
+        buttons: ['OK']
+      });
+      await alert.present();
+    })
   }
 }

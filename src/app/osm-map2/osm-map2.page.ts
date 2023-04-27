@@ -9,6 +9,7 @@ import {UserDataService} from "../services/user-data.service";
 import {FeatureCollection} from 'geojson'
 import {HttpClientModule} from "@angular/common/http";
 import {PopupComponent} from "../popup/popup.component";
+import {DataService} from "../services/data.service";
 
 @Component({
   selector: 'app-osm-map2',
@@ -19,9 +20,10 @@ import {PopupComponent} from "../popup/popup.component";
 })
 export class OsmMap2Page implements OnInit, OnChanges {
   @Input() selectedLocation: any;
+  @Input() evcs: any = [];
 
-  map: L.Map | undefined;
   currentUserLocation: GeoLocation = {latitude: 48.80308352215288, longitude: 9.198073272217787}
+  map: any
 
   evcsIcon = L.icon({
     iconUrl: 'https://cdn-icons-png.flaticon.com/512/2017/2017809.png',
@@ -396,7 +398,7 @@ export class OsmMap2Page implements OnInit, OnChanges {
     }*/
   }
 
-  constructor(public router: Router, private userDataService: UserDataService, private resolver: ComponentFactoryResolver, private injector: Injector) {
+  constructor(public router: Router, private userDataService: UserDataService, private resolver: ComponentFactoryResolver, private injector: Injector, private dataService: DataService) {
   }
 
   ngOnInit() {
@@ -424,17 +426,17 @@ export class OsmMap2Page implements OnInit, OnChanges {
   }
 
   loadMap() {
-    this.map = L.map('mapId').setView([this.currentUserLocation.latitude, this.currentUserLocation.longitude], 10);
+   this.map = L.map('mapId').setView([this.currentUserLocation.latitude, this.currentUserLocation.longitude], 10);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',).addTo(this.map);
     this.map.invalidateSize();
     window.dispatchEvent(new Event('resize'));  //prevent loading bug in ionic
 
-    L.marker([48.74494079278616, 9.32190382917665], {icon: this.evcsIcon}).addTo(this.map).bindPopup(this.component.location.nativeElement, {className: 'test'}).on('click', (event) => this.setPopupConfig(event));
-    L.marker([48.73848995276122, 9.31277376165469], {icon: this.evcsIcon}).addTo(this.map).bindPopup(this.component.location.nativeElement, {className: 'test'}).on('click', (event) => this.setPopupConfig(event));
-    L.marker([48.73532949058122, 9.320567098646743], {icon: this.evcsIcon}).addTo(this.map).bindPopup(this.component.location.nativeElement, {className: 'test'}).on('click', (event) => this.setPopupConfig(event));
+    for (let marker of this.evcs) {
+      this.createMarker(marker);
+    }
 
     //center marker when popup opens
-    this.map.on('popupopen', (e) => {
+    this.map.on('popupopen', (e: any) => {
       var px = this.map!.project(e.target._popup._latlng); // find the pixel location on the map where the popup anchor is
       px.y -= e.target._popup._container.clientHeight / 2; // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
       this.map!.panTo(this.map!.unproject(px), {animate: true}); // pan to new center
@@ -442,6 +444,10 @@ export class OsmMap2Page implements OnInit, OnChanges {
 
 
     L.geoJSON(this.json).addTo(this.map);
+  }
+
+  createMarker(marker: any) {
+    L.marker([marker.longitude, marker.latitude], {icon: this.evcsIcon}).addTo(this.map).bindPopup(this.component.location.nativeElement, {className: 'test'}).on('click', (event) => this.setPopupConfig(event));
   }
 
   setPopupConfig(event: any) {

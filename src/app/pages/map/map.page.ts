@@ -7,6 +7,7 @@ import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {Geolocation} from '@capacitor/geolocation';
 import {UserDataService} from "../../services/user-data.service";
+import {DataService} from "../../services/data.service";
 
 @Component({
   selector: 'app-map',
@@ -19,13 +20,21 @@ export class MapPage {
   typedSearch = ""
   selectedLocation = null;
   searchResults: any = null;
+  evcs = [];
 
-  constructor(private http: HttpClient, private userDataService: UserDataService) {
+  constructor(private http: HttpClient, private userDataService: UserDataService, private dataService: DataService) {
   }
 
   handleChange() {
     console.log('INPUT CHANGED');
     this.showConfig();
+  }
+
+  ionViewWillEnter() {
+    this.dataService.getAllEvcs().subscribe((evcs:any) => {
+      console.log('All EVCS: ', evcs)
+      this.evcs = evcs;
+    });
   }
 
   showConfig() {

@@ -19,21 +19,21 @@
           <ion-item lines="none">
             <ion-label position="stacked">Username</ion-label>
             <ion-input type="email" placeholder="Username" name="username"
-                       [(ngModel)]="credentials.username"></ion-input>
+                       [(ngModel)]="credentials.username" label="username"></ion-input>
           </ion-item>
           <ion-item lines="none">
             <ion-label position="stacked">Email</ion-label>
             <ion-input type="email" placeholder="Email" name="email"
-                       [(ngModel)]="credentials.email"></ion-input>
+                       [(ngModel)]="credentials.email" label="email"></ion-input>
           </ion-item>
           <ion-item lines="none">
             <ion-label position="stacked">Passwort</ion-label>
-            <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="credentials.password">
+            <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="credentials.password" label="password">
             </ion-input>
           </ion-item>
           <ion-item lines="none">
             <ion-label position="stacked">Passwort bestätigen</ion-label>
-            <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="credentials.password">
+            <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="credentials.password" label="password">
             </ion-input>
           </ion-item>
           <ion-button (click)="register()" expand="block">Registrieren</ion-button>

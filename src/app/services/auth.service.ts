@@ -65,8 +65,7 @@ export class AuthService {
   }
 
   register(credentials: {username: string, email: string, password: string, verifyPassword: string}): Observable<any> {
-    console.log('Create post request witH: ', credentials);
-    console.log('URL: ', this.url + 'users/register');
+    console.log('Create post request with ', credentials);
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
