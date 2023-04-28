@@ -9,7 +9,6 @@ import {UserDataService} from "../services/user-data.service";
 import {FeatureCollection} from 'geojson'
 import {HttpClientModule} from "@angular/common/http";
 import {PopupComponent} from "../popup/popup.component";
-import {DataService} from "../services/data.service";
 
 @Component({
   selector: 'app-osm-map2',
@@ -398,7 +397,7 @@ export class OsmMap2Page implements OnInit, OnChanges {
     }*/
   }
 
-  constructor(public router: Router, private userDataService: UserDataService, private resolver: ComponentFactoryResolver, private injector: Injector, private dataService: DataService) {
+  constructor(public router: Router, private userDataService: UserDataService, private resolver: ComponentFactoryResolver, private injector: Injector) {
   }
 
   ngOnInit() {
@@ -423,6 +422,7 @@ export class OsmMap2Page implements OnInit, OnChanges {
       /*L.marker([this.selectedLocation.geometry.coordinates[1], this.selectedLocation.geometry.coordinates[0]], {icon: this.greenIcon}).addTo(this.map!);*/
       this.map!.setView([this.selectedLocation.geometry.coordinates[1], this.selectedLocation.geometry.coordinates[0]], 15);
     }
+    this.createMarker();
   }
 
   loadMap() {
@@ -431,9 +431,7 @@ export class OsmMap2Page implements OnInit, OnChanges {
     this.map.invalidateSize();
     window.dispatchEvent(new Event('resize'));  //prevent loading bug in ionic
 
-    for (let marker of this.evcs) {
-      this.createMarker(marker);
-    }
+    this.createMarker();
 
     //center marker when popup opens
     this.map.on('popupopen', (e: any) => {
@@ -442,12 +440,14 @@ export class OsmMap2Page implements OnInit, OnChanges {
       this.map!.panTo(this.map!.unproject(px), {animate: true}); // pan to new center
     });
 
-
     L.geoJSON(this.json).addTo(this.map);
   }
 
-  createMarker(marker: any) {
-    L.marker([marker.longitude, marker.latitude], {icon: this.evcsIcon}).addTo(this.map).bindPopup(this.component.location.nativeElement, {className: 'test'}).on('click', (event) => this.setPopupConfig(event));
+  createMarker() {
+    for (let marker of this.evcs) {
+      console.log('CREATE MARKER: ', marker);
+      L.marker([marker.latitude, marker.longitude], {icon: this.evcsIcon}).addTo(this.map).bindPopup(this.component.location.nativeElement, {className: 'test'}).on('click', (event) => this.setPopupConfig(event));
+    }
   }
 
   setPopupConfig(event: any) {

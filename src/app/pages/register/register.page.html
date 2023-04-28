@@ -17,23 +17,19 @@
         </ion-card-header>
         <ion-card-content>
           <ion-item lines="none">
-            <ion-label position="stacked">Username</ion-label>
-            <ion-input type="email" placeholder="Username" name="username"
-                       [(ngModel)]="credentials.username" label="username"></ion-input>
+            <ion-input type="email"  name="username" placeholder="geb hier deinen Benutzernamen ein"
+                       [(ngModel)]="credentials.username" label="Benutzername" label-placement="stacked"></ion-input>
           </ion-item>
           <ion-item lines="none">
-            <ion-label position="stacked">Email</ion-label>
-            <ion-input type="email" placeholder="Email" name="email"
-                       [(ngModel)]="credentials.email" label="email"></ion-input>
+            <ion-input type="email" placeholder="deine E-Mail" name="email"
+                       [(ngModel)]="credentials.email" label="E-Mail" label-placement="stacked"></ion-input>
           </ion-item>
           <ion-item lines="none">
-            <ion-label position="stacked">Passwort</ion-label>
-            <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="credentials.password" label="password">
+            <ion-input type="password" placeholder="Passwort" name="password" [(ngModel)]="credentials.password" label="Passwort" label-placement="stacked">
             </ion-input>
           </ion-item>
           <ion-item lines="none">
-            <ion-label position="stacked">Passwort bestätigen</ion-label>
-            <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="credentials.password" label="password">
+            <ion-input type="password" placeholder="Passwort" name="verifyPassword" [(ngModel)]="credentials.verifyPassword" label="Passwort bestätigen" label-placement="stacked">
             </ion-input>
           </ion-item>
           <ion-button (click)="register()" expand="block">Registrieren</ion-button>
