@@ -5,7 +5,6 @@ import {OsmMap2Page} from "../../osm-map2/osm-map2.page";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
-import {Geolocation} from '@capacitor/geolocation';
 import {UserDataService} from "../../services/user-data.service";
 import {DataService} from "../../services/data.service";
 
@@ -30,11 +29,12 @@ export class MapPage {
     this.showConfig();
   }
 
-  ionViewWillEnter() {
-    this.dataService.getAllEvcs().subscribe((evcs:any) => {
-      console.log('All EVCS: ', evcs)
-      this.evcs = evcs;
-    });
+  async ionViewWillEnter() {
+    await this.dataService.setAllEvcs()
+    this.dataService.getAllEvcs().subscribe(allEvcs => {
+      console.log('Alle EVCS: ', allEvcs);
+      this.evcs = allEvcs;
+    })
   }
 
   showConfig() {

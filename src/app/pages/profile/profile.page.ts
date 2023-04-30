@@ -20,7 +20,6 @@ export class ProfilePage implements OnInit {
   }
 
   ionViewWillEnter() {
-    console.log('ENTER VIEW');
     this.user = this.auth.getUser();
   }
 

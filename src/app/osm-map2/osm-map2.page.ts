@@ -446,15 +446,14 @@ export class OsmMap2Page implements OnInit, OnChanges {
   createMarker() {
     for (let marker of this.evcs) {
       console.log('CREATE MARKER: ', marker);
-      L.marker([marker.latitude, marker.longitude], {icon: this.evcsIcon}).addTo(this.map).bindPopup(this.component.location.nativeElement, {className: 'test'}).on('click', (event) => this.setPopupConfig(event));
+      L.marker([marker.latitude, marker.longitude], {icon: this.evcsIcon}).addTo(this.map).bindPopup(this.component.location.nativeElement, {className: 'test'}).on('click', (event) => this.setPopupConfig(marker));
     }
   }
 
-  setPopupConfig(event: any) {
-    console.log('HUHU', event.target._latlng);
+  setPopupConfig(marker: any) {
+    console.log('HUHU', marker);
     this.component.instance.name = 'Hans Martin Müller';
-    this.component.instance.latitude = event.target._latlng.lat;
-    this.component.instance.longitude = event.target._latlng.lng;
+    this.component.instance.marker = marker;
     this.component.changeDetectorRef.detectChanges();
   }
 

@@ -12,8 +12,8 @@ import {CommonModule} from "@angular/common";
 export class PopupComponent  implements OnInit {
 
   @Input() name: string = '';
-  @Input() longitude: string = '';
-  @Input() latitude: string = '';
+  @Input() marker: any;
+
 
   constructor() { }
 
@@ -21,7 +21,7 @@ export class PopupComponent  implements OnInit {
 
   navigate() {
     console.log('Navigate!!!');
-    window.open('https://www.google.com/maps/dir/?api=1&destination=' + this.latitude + ',' + this.longitude, "_blank");
+    window.open('https://www.google.com/maps/dir/?api=1&destination=' + this.marker.latitude + ',' + this.marker.longitude, "_blank");
   }
 
   reservate() {
