@@ -12,13 +12,9 @@ import { RangeValue } from '@ionic/core';
   imports: [IonicModule, CommonModule],
 })
 export class Step3Component implements OnInit {
-  currentStep = 0;
   lastEmittedValue: RangeValue  = 22;
 
   constructor(private stepperService: StepperService) {
-    this.stepperService.getCurrentStep().subscribe((value) => {
-      this.currentStep = value;
-    })
   }
 
   next() {

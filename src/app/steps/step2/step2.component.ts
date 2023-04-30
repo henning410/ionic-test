@@ -11,12 +11,8 @@ import { StepperService } from '../../services/stepper.service';
   imports: [IonicModule, CommonModule],
 })
 export class Step2Component  implements OnInit {
-  currentStep = 0;
 
   constructor(private stepperService: StepperService) {
-    this.stepperService.getCurrentStep().subscribe((value) => {
-      this.currentStep = value;
-    })
   }
 
   next() {
