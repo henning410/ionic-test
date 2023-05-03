@@ -31,6 +31,6 @@ export class DataService {
   }
 
   getAllEvcs() {
-    return this.allEvcs;
+    return this.allEvcs.asObservable();
   }
 }
